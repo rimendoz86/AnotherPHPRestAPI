@@ -4,6 +4,9 @@ include 'Connection.php';
 use Data;
 
 class Product extends Data\Connection{
+    //This was for a school project, 
+    //you should use parameter binding where applicable, 
+    //maybe future version will have binding as a part of the methods
     function GetAllProducts(){
         $sql = "
         SELECT ID, Name, Description, Price  
