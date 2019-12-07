@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+     <title>API Test Page</title>
+     <script src="script.js"></script>
+</head>
+<body>
+     <script>
+          function TestGet(){
+               Data.Get('Product').then((res)=>{
+                    console.log(res)
+               });
+          }
+
+          function TestGetWith(){
+               Data.Get('Product','ID=1').then((res)=>{
+                    console.log(res)
+               });
+          }
+
+          function TestPost(){
+               var newProduct = {
+               Name: "Mango",
+               Description: "Ymmmy fun,",
+               Price: 5.00  
+               }
+               Data.Post('Product',newProduct).then((res)=>{
+                    console.log(res);
+                    if(res.IsValid()){
+                         console.log("Do Somethingg")
+                    }
+               });
+          }
+
+          function TestPut(){
+               var updatedApple = {
+               ID: 1,
+               Name: "Apple",
+               Description: "asdf",
+               Price: 2.99  
+               }
+               Data.Put('Product',updatedApple).then((res)=>{
+                    console.log(res);
+                    if(res.IsValid()){
+                         console.log("Do Somethingg")
+                    }
+               });
+          }
+
+     
+     
+     </script>
+</body>
+</html>
