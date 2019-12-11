@@ -18,12 +18,11 @@ class Connection {
     }
 
     function StmtToList($stmt){
-        if($stmt == false) return;
         $results = [];
         $res = $stmt->get_result();
         while ($model = $res->fetch_object()) {
             array_push($results, $model);
-        };
+        }
         return $results;
     }
 
@@ -46,14 +45,14 @@ class Connection {
     
     function dbInsert($SQLCommand, $types = false, $mixed = []){
         $stmt = $this->Conn->prepare($SQLCommand);   
-        if($types != '' && count($mixed) > 0) $stmt->bind_param($types, ...$mixed);
-
         if($stmt == false){
             $error = [];
             array_push($error, "Error with SQL Statement:".$SQLCommand);
             array_push($error, $this->Conn->error_list);
             $this->MapError($error);
         }
+
+        if($types != '' && count($mixed) > 0) $stmt->bind_param($types, ...$mixed);
 
         $stmt->execute();
         $stmt->close();
