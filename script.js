@@ -1,15 +1,3 @@
-function ResponseModel(result = [], validationMessages = []){
-    this.Result = result;
-    this.ValidationMessages = validationMessages;
-    this.Key;
-    this.IsValid = function(){
-        let isValid = false;
-        if (!this.ValidationMessages || this.ValidationMessages.length == 0)
-        isValid = true;
-        return isValid;
-    }
-}
-
 var Data = {
     BaseURL: "\\_API\\Controllers\\",
     ContentType: "application/json",
@@ -70,13 +58,21 @@ var Data = {
     },
     _MapResponse: (res) =>{
         let response = JSON.parse(res.responseText);
-        return new ResponseModel(response.Result, response.ValidationMessages)
+        return new Data._Response(response.Result, response.ValidationMessages, response.Key);
     },
     _MapError:(res, err)=>{
-        let response = new ResponseModel;
-        response.ValidationMessages.push(res.responseText);
+        let response = new Data._Response;
+        response.ValidationMessages.push(res);
         response.ValidationMessages.push(err);
         console.log(response);
         return response;
+    },
+    _Response: function (result = [], validationMessages = [], key = null){
+        this.Result = result;
+        this.ValidationMessages = validationMessages;
+        this.Key = key;
+        this.IsValid = function(){
+            return !this.ValidationMessages || this.ValidationMessages.length == 0
+        }
     }
 }
