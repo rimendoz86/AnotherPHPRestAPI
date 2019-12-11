@@ -13,7 +13,7 @@ class Product extends API\APIBase{
 
     function GetWith($req) {
         //validate request
-        if(!isset($req->ID)){
+        if(!isset($req->ID) || empty($req->ID)){
             $this->AddValidationMessage("Product ID is Required");
             $this->SendResponse(200);
         }
