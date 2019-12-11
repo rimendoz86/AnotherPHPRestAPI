@@ -4,9 +4,7 @@ include 'Connection.php';
 use Data;
 
 class Product extends Data\Connection{
-    //This was for a school project, 
-    //you should use parameter binding where applicable, 
-    //maybe future version will have binding as a part of the methods
+
     function GetAllProducts(){
         $sql = "
         SELECT ID, Name, Description, Price  
@@ -19,9 +17,9 @@ class Product extends Data\Connection{
     function GetProduct($id){
         $sql = "SELECT ID, Name, Description, Price  
         FROM Product
-        WHERE IsActive = 1 AND ID = $id;";
+        WHERE IsActive = 1 AND ID = ?;";
 
-        return $this->dbSelect($sql);
+        return $this->dbSelect($sql, "i",[$id]);
     }
 
     function Insert($req){
@@ -33,21 +31,23 @@ class Product extends Data\Connection{
         )
         VALUES
         (
-            '$req->Name',
-            '$req->Description',
-            $req->Price
+            ?,
+            ?,
+            ?
         )";
-        return $this->dbInsert($sql);
+        $params = [$req->Name,$req->Description,$req->Price];
+        return $this->dbInsert($sql, "ssi", $params);
     }
 
     function Update($req){
         $sql = "UPDATE Product SET
-        Name = '$req->Name',
-        Description = '$req->Description',
-        Price = $req->Price
-        WHERE ID = $req->ID;";
+        Name = ?,
+        Description = ?,
+        Price = ?
+        WHERE ID = ?;";
 
-        $this->dbUpdate($sql);
+        $params = [$req->Name,$req->Description, $req->Price, $req->ID];
+        $this->dbUpdate($sql,"ssii", $params);
         return $req;
     }
 

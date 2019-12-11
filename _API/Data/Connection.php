@@ -2,8 +2,8 @@
 namespace Data;
 class Connection {
     public $Servername = "localhost";
-    public $Username = "dbUser";
-    public $Password = "dbPass";
+    public $Username = "root";
+    public $Password = "";
     public $Database = "dbTest";
     public $Port = 3306;
     public $Conn;
@@ -20,14 +20,13 @@ class Connection {
     function StmtToList($stmt){
         $results = [];
         $res = $stmt->get_result();
-        //var_dump($res);
         while ($model = $res->fetch_object()) {
             array_push($results, $model);
-        };
+        }
         return $results;
     }
 
-    function dbSelect($SQLCommand){
+    function dbSelect($SQLCommand, $types = false, $mixed = []){
         $stmt = $this->Conn->prepare($SQLCommand);   
         if($stmt == false){
             $error = [];
@@ -35,13 +34,16 @@ class Connection {
             array_push($error, $this->Conn->error_list);
             $this->MapError($error);
         }
+
+        if($types != '' && count($mixed) > 0) $stmt->bind_param($types, ...$mixed);
+
         $stmt->execute();
         $res = $this->StmtToList($stmt);
         $stmt->close();
         return $res;
     }
     
-    function dbInsert($SQLCommand){
+    function dbInsert($SQLCommand, $types = false, $mixed = []){
         $stmt = $this->Conn->prepare($SQLCommand);   
         if($stmt == false){
             $error = [];
@@ -49,12 +51,15 @@ class Connection {
             array_push($error, $this->Conn->error_list);
             $this->MapError($error);
         }
+
+        if($types != '' && count($mixed) > 0) $stmt->bind_param($types, ...$mixed);
+
         $stmt->execute();
         $stmt->close();
         return $this->Conn->insert_id;
     }
         
-    function dbUpdate($SQLCommand){
+    function dbUpdate($SQLCommand, $types = false, $mixed = []){
         $stmt = $this->Conn->prepare($SQLCommand);   
         if($stmt == false){
             $error = [];
@@ -62,6 +67,9 @@ class Connection {
             array_push($error, $this->Conn->error_list);
             $this->MapError($error);
         }
+
+        if($types != '' && count($mixed) > 0) $stmt->bind_param($types, ...$mixed);
+
         $res = $stmt->execute();
         $stmt->close();
         return $res;
