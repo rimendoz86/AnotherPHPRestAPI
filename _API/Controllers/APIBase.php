@@ -4,14 +4,14 @@ if ( session_status() ===  PHP_SESSION_NONE) {
     session_start();
 }
 require_once '../Models/Model.php';
-
 header("Content-Type: application/json; charset=UTF-8");
+
 class APIBase {
     public $Sess_Auth;
     public $Response;
     function __construct(){
         $RequestMethod = $_SERVER['REQUEST_METHOD'];
-        $this->Response = new \ Model\Response();
+        $this->Response = new Response();
         switch ($RequestMethod) {
             case 'GET':
                 $RequestObject = (object) $_GET;

@@ -1,12 +1,12 @@
 <?php 
-namespace Data\Repository;
+namespace API;
 include 'Connection.php';
 use Data;
 
-class ProductRepository extends Data\Connection{
+class ProductRepository extends Connection{
 
     function ModelMapper($entity){
-        $model = new \ Model\Product();
+        $model = new Product();
         $model->ID = $entity->ID;
         $model->Name = $entity->Name;
         $model->Title = $entity->Description;

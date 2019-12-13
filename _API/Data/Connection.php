@@ -1,5 +1,5 @@
 <?php 
-namespace Data;
+namespace API;
 require_once '../Models/Model.php';
 class Connection {
     public $Servername = "localhost";

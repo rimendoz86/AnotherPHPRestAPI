@@ -1,5 +1,5 @@
 <?php 
-namespace Model;
+namespace API;
 class Response{
     public $ValidationMessages = [];
     public $Result = [];

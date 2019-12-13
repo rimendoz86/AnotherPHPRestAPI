@@ -2,12 +2,10 @@
 namespace API;
 include_once 'APIBase.php';
 include_once '../Data/Repository.php';
-use API;
-use Data\Repository;
-class ProductController extends API\APIBase{
+class ProductController extends APIBase{
 
     function Get(){      
-        $repository = new Repository\ProductRepository();
+        $repository = new ProductRepository();
         $this->Response->Result = $repository->GetAllProducts();
     }
 
@@ -19,7 +17,7 @@ class ProductController extends API\APIBase{
         }
 
         //get result
-        $repository = new Repository\ProductRepository();
+        $repository = new ProductRepository();
         $this->Response->Result = $repository->GetProduct($req->ID);
     }
 
@@ -36,7 +34,7 @@ class ProductController extends API\APIBase{
         }
         
         //get result
-        $repository = new Repository\ProductRepository();
+        $repository = new ProductRepository();
         $this->Response->Key = $repository->Insert($req);
     }
 
@@ -54,7 +52,7 @@ class ProductController extends API\APIBase{
             $this->SendResponse(200);
         }
         //get result
-        $repository = new Repository\ProductRepository();
+        $repository = new ProductRepository();
         array_push($this->Response->Result, $repository->Update($req));
     }
 }
