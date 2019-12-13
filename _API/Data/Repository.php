@@ -3,7 +3,16 @@ namespace Data\Repository;
 include 'Connection.php';
 use Data;
 
-class Product extends Data\Connection{
+class ProductRepository extends Data\Connection{
+
+    function ModelMapper($entity){
+        $model = new \ Model\Product();
+        $model->ID = $entity->ID;
+        $model->Name = $entity->Name;
+        $model->Title = $entity->Description;
+        $model->Cost= $entity->Price;
+        return $model;
+    }
 
     function GetAllProducts(){
         $sql = "

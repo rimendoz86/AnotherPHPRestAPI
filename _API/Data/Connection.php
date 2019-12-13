@@ -1,5 +1,6 @@
 <?php 
 namespace Data;
+require_once '../Models/Model.php';
 class Connection {
     public $Servername = "localhost";
     public $Username = "root";
@@ -20,10 +21,16 @@ class Connection {
     function StmtToList($stmt){
         $results = [];
         $res = $stmt->get_result();
-        while ($model = $res->fetch_object()) {
+        while ($entity = $res->fetch_object()) {
+            $model = $this->ModelMapper($entity);
             array_push($results, $model);
         }
         return $results;
+    }
+    
+    function ModelMapper($entity){
+        $model = $entity;
+        return $model;
     }
 
     function dbSelect($SQLCommand, $types = false, $mixed = []){
